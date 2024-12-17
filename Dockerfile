@@ -1,6 +1,11 @@
-# Utiliza la imagen de Keycloak para modo desarrollo
-FROM quay.io/keycloak/keycloak:26.0.7
+FROM quay.io/keycloak/keycloak:latest as builder
 
+# Enable health and metrics support
+ENV KC_HEALTH_ENABLED=true
+ENV KC_METRICS_ENABLED=true
+
+# Configure a database vendor
+ENV KC_DB=postgres
 
 # Para desarrollo, habilitar el modo dev (desactivar algunas optimizaciones)
 ENV KEYCLOAK_DEV=true
