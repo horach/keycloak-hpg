@@ -1,35 +1,29 @@
+# Fase de construcción
 FROM quay.io/keycloak/keycloak:latest as builder
 
-# Configure the database vendor and enable health and metrics endpoints.
-ENV KC_DB=postgres
+# Habilitar soporte de health y métricas
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
 
-# For demonstration purposes only. Use signed certificates in production!
-WORKDIR /opt/keycloak
+# Configurar un proveedor de base de datos
+ENV KC_DB=postgres
 
-# Create the optimized configuration
+WORKDIR /opt/keycloak
+# Construir Keycloak
 RUN /opt/keycloak/bin/kc.sh build
 
-# Defines the runtime container image
+# Fase final
 FROM quay.io/keycloak/keycloak:latest
-
-# Copy the configuration files from the builder image to this runtime image
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
-# Set default values db pool/configs
+# Configuración de base de datos (reemplaza con los valores adecuados)
 ENV KC_DB=postgres
-ENV KC_DB_POOL_INITIAL_SIZE=50
-ENV KC_DB_POOL_MIN_SIZE=50
-ENV KC_DB_POOL_MAX_SIZE=50
-ENV QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY=true
+ENV KC_DB_URL=<DBURL>
+ENV KC_DB_USERNAME=<DBUSERNAME>
+ENV KC_DB_PASSWORD=<DBPASSWORD>
+ENV KC_HOSTNAME=localhost
 
-# Default hostname value. This should be updated when deployed.
-ENV KC_HOSTNAME="localhost:8080"
-
-# Default to enable listening on HTTP, and accept edge TLS termination. In
-# other words we trust the load balancer in front of keycloak.
+# Deshabilitar HTTPS (solo para desarrollo)
 ENV KC_HTTP_ENABLED=true
-ENV KC_PROXY=edge
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
