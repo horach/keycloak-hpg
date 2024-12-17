@@ -26,4 +26,4 @@ ENV KC_DB=postgres
 # Deshabilitar HTTPS (solo para desarrollo)
 ENV KC_HTTP_ENABLED=true
 
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
