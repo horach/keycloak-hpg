@@ -8,6 +8,7 @@ COPY /theme/keywind /opt/keycloak/themes/keywind
 
 RUN /opt/keycloak/bin/kc.sh build
 
+
 FROM fedora AS bins
 
 RUN curl -fsSL https://github.com/caddyserver/caddy/releases/download/v2.7.4/caddy_2.7.4_linux_amd64.tar.gz | tar -zxvf - caddy
