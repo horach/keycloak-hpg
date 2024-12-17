@@ -18,10 +18,10 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 # Configuración de base de datos (reemplaza con los valores adecuados)
 ENV KC_DB=postgres
-ENV KC_DB_URL=<DBURL>
-ENV KC_DB_USERNAME=<DBUSERNAME>
-ENV KC_DB_PASSWORD=<DBPASSWORD>
-ENV KC_HOSTNAME=localhost
+#ENV KC_DB_URL=<DBURL>
+#ENV KC_DB_USERNAME=<DBUSERNAME>
+#ENV KC_DB_PASSWORD=<DBPASSWORD>
+#ENV KC_HOSTNAME=localhost
 
 # Deshabilitar HTTPS (solo para desarrollo)
 ENV KC_HTTP_ENABLED=true
